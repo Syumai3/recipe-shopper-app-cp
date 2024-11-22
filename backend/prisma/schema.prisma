@@ -1,0 +1,127 @@
+// データベースの接続情報
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// generateコマンドで生成するものを指定
+generator client {
+  provider = "prisma-client-js"
+}
+
+// アプリケーションで使用するモデル
+
+model User {
+  id        String   @id
+  username  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  recipes   Recipe[]
+  menus     Menu[]
+}
+
+model Recipe {
+  id                Int                @id @default(autoincrement())
+  userId            String
+  name              String
+  imageUrl          String?
+  description       String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeIngredients RecipeIngredient[]
+  menuRecipes       MenuRecipe[]
+}
+
+model Ingredient {
+  id                Int                @id @default(autoincrement())
+  unitId            Int
+  name              String
+  category          String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  unit              Unit               @relation(fields: [unitId], references: [id])
+  recipeIngredients RecipeIngredient[]
+  shoppingListItems ShoppingListItem[]
+}
+
+model RecipeIngredient {
+  id           Int        @id @default(autoincrement())
+  recipeId     Int
+  ingredientId Int
+  quantity     Float
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+}
+
+model Menu {
+  id           Int            @id @default(autoincrement())
+  userId       String
+  startDate    DateTime
+  endDate      DateTime
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  user         User           @relation(fields: [userId], references: [id])
+  menuRecipes  MenuRecipe[]
+  shoppingList ShoppingList[]
+}
+
+model MenuRecipe {
+  id          Int         @id @default(autoincrement())
+  menuId      Int
+  recipeId    Int
+  dayOfWeek   DayOfWeek
+  mealSection MealSection
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  recipe      Recipe      @relation(fields: [recipeId], references: [id])
+  menu        Menu        @relation(fields: [menuId], references: [id])
+}
+
+model ShoppingList {
+  id                Int                @id @default(autoincrement())
+  menuId            Int
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  menu              Menu               @relation(fields: [menuId], references: [id])
+  shoppingListItems ShoppingListItem[]
+}
+
+model ShoppingListItem {
+  id             Int          @id @default(autoincrement())
+  shoppingListId Int
+  ingredientId   Int
+  quantity       Float
+  isChecked      Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id])
+  ingredient     Ingredient   @relation(fields: [ingredientId], references: [id])
+}
+
+model Unit {
+  id         Int          @id @default(autoincrement())
+  unit       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  ingredient Ingredient[]
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum MealSection {
+  BREAKFAST
+  LUNCH
+  DINNER
+}

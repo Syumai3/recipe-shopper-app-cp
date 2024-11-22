@@ -1,0 +1,18 @@
+# src/graphql/mutations/deleteRecipe.graphql
+mutation DeleteRecipe($id: Int!) {
+  deleteRecipe(id: $id) {
+    id
+    name
+    description
+    recipeIngredients {
+      quantity
+      ingredient {
+        id
+        name
+        unit {
+          unit
+        }
+      }
+    }
+  }
+}

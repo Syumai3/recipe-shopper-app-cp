@@ -1,0 +1,16 @@
+export const units = [
+  { id: 1, name: 'g' },
+  { id: 2, name: 'cc' },
+  { id: 3, name: 'ml' },
+  { id: 4, name: 'cm' },
+  { id: 5, name: '個' },
+  { id: 6, name: '枚' },
+  { id: 7, name: '束' },
+  { id: 8, name: '片' },
+  { id: 9, name: '缶' },
+  { id: 10, name: '本' },
+  { id: 11, name: '袋' },
+  { id: 12, name: '合' },
+  { id: 13, name: '尾' },
+  { id: 14, name: '切れ' },
+];

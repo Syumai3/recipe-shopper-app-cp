@@ -1,0 +1,20 @@
+query GetUserRecipes($userId: String!) {
+  recipesByUserId(userId: $userId) {
+    id
+    name
+    description
+    createdBy {
+      username
+    }
+    recipeIngredients {
+      quantity
+      ingredient {
+        id
+        name
+        unit {
+          unit
+        }
+      }
+    }
+  }
+}

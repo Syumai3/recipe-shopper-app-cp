@@ -1,0 +1,18 @@
+# src/graphql/mutations/updateRecipe.graphql
+mutation UpdateRecipe($input: UpdateRecipeInput!) {
+  updateRecipe(input: $input) {
+    id
+    name
+    description
+    recipeIngredients {
+      quantity
+      ingredient {
+        id
+        name
+        unit {
+          unit
+        }
+      }
+    }
+  }
+}

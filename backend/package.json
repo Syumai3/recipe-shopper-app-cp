@@ -1,0 +1,47 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm src/index.ts",
+    "dev": "node --loader ts-node/esm --watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx prisma generate && tsc",
+    "seed": "node --loader ts-node/esm prisma/seed.ts",
+    "db:up": "docker-compose up -d",
+    "db:down": "docker-compose down",
+    "db:connect": "docker exec -it backend-db-1 psql -U myuser -d recipe_shopper",
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio"
+  },
+  "prisma": {
+    "seed": "node --loader ts-node/esm prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "@prisma/client": "^5.21.1",
+    "apollo-server": "^3.13.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "graphql-scalars": "^1.23.0",
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.7.7",
+    "@types/uuid": "^10.0.0",
+    "prisma": "^5.21.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.2"
+  }
+}

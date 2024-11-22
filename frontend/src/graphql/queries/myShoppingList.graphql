@@ -1,0 +1,12 @@
+query MyShoppingList($recipeIds: [Int!]!, $servings: [Int!]!) {
+  myShoppingList(recipeIds: $recipeIds, servings: $servings) {
+    ingredient {
+      id
+      name
+      unit {
+        unit
+      }
+    }
+    totalQuantity
+  }
+}

@@ -1,0 +1,8 @@
+## [テスト]型ファイルを生成する
+query GetRecipes {
+  recipes {
+    id
+    name
+    description
+  }
+}
